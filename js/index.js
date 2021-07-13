@@ -3,9 +3,9 @@ $(document).ready(function () {
     method: 'GET',
     url: 'https://economia.awesomeapi.com.br/all',
   }).done(function (allCoins) {
-    //const jsonCoins = JSON.stringify(allCoins);
-    //const coins = JSON.parse(jsonCoins)
-    const keys = Object.values(allCoins);
+    const jsonCoins = JSON.stringify(allCoins);
+    const coins = JSON.parse(jsonCoins)
+    const keys = Object.values(coins);
     console.log(coins);
     console.log(keys);
     let arr = [];
@@ -17,9 +17,9 @@ $(document).ready(function () {
         method: 'GET',
         url: `https://economia.awesomeapi.com.br/last/${val.target.value+ '-BRL'}`,
       }).done(function (choicedCoin) {
-        //const coinList = JSON.stringify(choicedCoin);
-        //const lastCoinObject = JSON.parse(coinList);
-        const values = Object.values(choicedCoin);
+        const coinList = JSON.stringify(choicedCoin);
+        const lastCoinObject = JSON.parse(coinList);
+        const values = Object.values(lastCoinObject);
 
         console.log(coinList);
         console.log(values);
@@ -53,12 +53,24 @@ $(document).ready(function () {
             console.log(coinsPerDates)
             //const coinsPerDate = JSON.stringify(coinsPerDates);
             //const coinsPerDateObject = JSON.parse(coinsPerDate);
+            function timeConverter(UNIX_timestamp){
+              const a = new Date(UNIX_timestamp * 1000);
+              const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+              const year = a.getFullYear();
+              const month = months[a.getMonth()];
+              const date = a.getDate();
+              const hour = a.getHours();
+              const min = a.getMinutes();
+              const sec = a.getSeconds();
+              let time = `${date}/${month}/${year} às ${hour}:${min}:${sec}`;
+              return time;
+            }
             const coinsPerDateValues = Object.values(coinsPerDates);
             console.log(coinsPerDateValues)
             $('#show-coin-date').empty();
             for(let i = 0; i < coinsPerDateValues.length; i++) {
               $('#show-coin-date').append(`              
-              <span class="coin-text"> R$: ${coinsPerDateValues[i].bid}</span>`)
+              <span class="coin-text"> R$: ${coinsPerDateValues[i].bid}, Data e Hora: ${timeConverter(coinsPerDateValues[i].timestamp)}</span>`)
              
             }
               

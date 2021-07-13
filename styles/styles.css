@@ -124,12 +124,11 @@ footer{
 }
 #show-coin-date {
   display: flex;
-  height: 200px;
-  width: 200px;
+    height: 200px;
+  width: 600px;
   flex-direction: row;
   margin: 20px;
   flex-wrap: wrap;
-  align-items: center;
-  align-content: space-around;
-  justify-content: space-between;
+  align-content: center;
+  justify-content: flex-start;
 }
